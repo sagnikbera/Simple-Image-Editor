@@ -7,6 +7,7 @@ let originalFileName = 'image';
 
 document.getElementById('upload').addEventListener('change' , function(event) {
     document.querySelector(".canvasContainer").style.display = 'block';
+    document.querySelector('.custom-image-upload').classList.add('hidden');
 
     const file = event.target.files[0];
 
