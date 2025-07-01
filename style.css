@@ -63,9 +63,9 @@ h1 {
      background: linear-gradient(135deg ,var(--col2) ,var(--col1));
 }
 
-/* .hidden {
+.hidden {
     display: none;
-} */
+}
 
 .canvasContainer {
     display: none;
