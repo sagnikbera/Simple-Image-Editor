@@ -1,0 +1,91 @@
+// Select the canvas and its container from the DOM
+const canvas = document.getElementById("canvas");
+const canvasContainer = document.querySelector(".canvasContainer");
+
+// Get the 2D drawing context for the canvas
+const ctx = canvas.getContext('2d');
+
+// Create an image object to store the uploaded image
+let image = new Image();
+
+// To hold the name of the uploaded file for later use in download
+let originalFileName = 'image';
+
+// Listen for file input change (when a user selects an image)
+document.getElementById('upload').addEventListener('change', function(event) {
+    // Make the canvas visible after image is selected
+    document.querySelector(".canvasContainer").style.display = 'block';
+
+    const file = event.target.files[0]; // Get the selected file
+
+    // Extract the file name without the extension
+    const nameWithoutExt = file.name.split('.').slice(0, -1).join('.');
+    originalFileName = nameWithoutExt; // Store for download use
+
+    // Create a FileReader to read the file as DataURL
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        image.src = e.target.result; // Set image source to the uploaded file
+    }
+
+    reader.readAsDataURL(file); // Read the image file as a base64 URL
+});
+
+// When the image finishes loading into the <img> object
+image.onload = function() {
+    // Set canvas dimensions equal to the image dimensions
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    // Draw the original image onto the canvas
+    ctx.drawImage(image, 0, 0);
+}
+
+// Function to apply visual filters using canvas context
+function applyFilters() {
+    // Get current values from each input slider
+    const brightness = document.getElementById('brightness').value;
+    const contrast = document.getElementById('contrast').value;
+    const grayscale = document.getElementById('grayscale').value;
+    const saturate = document.getElementById('saturate').value;
+    const sepia = document.getElementById('sepia').value;
+    const invert = document.getElementById('invert').value;
+    const blur = document.getElementById('blur').value;
+
+    // Apply all filters using a valid single-line CSS filter string
+    ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) grayscale(${grayscale}%) saturate(${saturate}%) sepia(${sepia}%) invert(${invert}%) blur(${blur}px)`;
+
+    // Redraw the image with filters applied
+    ctx.drawImage(image, 0, 0);
+}
+
+// Add event listeners to all sliders to trigger filter updates
+document.getElementById('brightness').addEventListener('input', applyFilters);
+document.getElementById('contrast').addEventListener('input', applyFilters);
+document.getElementById('grayscale').addEventListener('input', applyFilters);
+document.getElementById('saturate').addEventListener('input', applyFilters);
+document.getElementById('sepia').addEventListener('input', applyFilters);
+document.getElementById('invert').addEventListener('input', applyFilters);
+document.getElementById('blur').addEventListener('input', applyFilters);
+
+// When the download button is clicked
+document.getElementById('download').addEventListener('click', () => {
+    const link = document.createElement('a'); // Create a temporary anchor tag
+    link.href = canvas.toDataURL(); // Get the current canvas as a base64 image URL
+    link.download = `${originalFileName}-edited.png`; // Set download file name
+    link.click(); // Programmatically click the link to trigger download
+});
+
+// When the reset button is clicked
+document.getElementById('reset').addEventListener('click', () => {
+    // Reset all sliders to default values
+    document.getElementById('brightness').value = 100;
+    document.getElementById('contrast').value = 100;
+    document.getElementById('grayscale').value = 0;
+    document.getElementById('saturate').value = 100;
+    document.getElementById('sepia').value = 0;
+    document.getElementById('invert').value = 0;
+    document.getElementById('blur').value = 0;
+
+    applyFilters(); // Reapply filters with default values
+});

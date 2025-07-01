@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Image Editor</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Image Editor</h1>
+
+        <label for="upload" class="custom-image-upload">Upload Image</label>
+        <input type="file" id="upload" accept="image/*">
+
+        <div class="canvasContainer hidden">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div id="controls">
+            <label for="brightness">Brightness</label>
+            <input type="range" 
+            name="brightness" 
+            id="brightness"
+            min="0"
+            max="200"
+            value="100">
+
+            <label for="contrast">Contrast</label>
+            <input type="range" 
+            name="contrast" 
+            id="contrast"
+            min="0"
+            max="200"
+            value="100">
+
+            <label for="grayscale">Gray Scale</label>
+            <input type="range" 
+            name="grayscale" 
+            id="grayscale"
+            min="-100"
+            max="100"
+            value="0">
+
+            <label for="saturate">Saturation</label>
+            <input type="range" 
+            name="saturate" 
+            id="saturate"
+            min="0"
+            max="200"
+            value="100">
+
+            <label for="sepia">Sepia</label>
+            <input type="range" 
+            name="sepia" 
+            id="sepia"
+            min="0"
+            max="100"
+            value="0">
+
+            <label for="invert">Invert</label>
+            <input type="range" 
+            name="invert" 
+            id="invert"
+            min="0"
+            max="100"
+            value="0">
+            
+            <label for="blur">Blur</label>
+            <input type="range" 
+            name="blur" 
+            id="blur"
+            min="0"
+            max="10"
+            value="0">
+
+
+
+            <button id="reset">Reset<span class="material-icons-outlined">
+                cached
+            </span></button>
+            <button id="download">Download Image</button>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
